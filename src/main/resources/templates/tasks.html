@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks</title>
+</head>
+<body>
+<h1>Tasks</h1>
+
+<div th:if="${tasks != null and !tasks.empty}">
+    <ul>
+        <li th:each="task : ${tasks}">
+            <span th:text="*{task.title}"></span>: due <span th:text="*{task.date}"></span>
+        </li>
+    </ul>
+</div>
+<div th:unless="${tasks != null and !tasks.empty}">
+    <p>No tasks left to do.</p>
+</div>
+
+</body>
+</html>
