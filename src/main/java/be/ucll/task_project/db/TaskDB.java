@@ -33,10 +33,23 @@ public class TaskDB implements Serializable, TaskService {
     }
 
     private void addTask(Task task){
+        task.setId(this.tasks.size());
         this.tasks.add(task);
     }
+
     private void addTask(String title, String date, String time) throws ParseException { //date in ”dd/mm/yyyy” format; time in ”hh:mm” format
         Task task = new Task(title, date, time);
+        task.setId(this.tasks.size());
         this.tasks.add(task);
+    }
+
+    @Override
+    public Task getTask(int id) throws IllegalArgumentException{
+        if (id < this.tasks.size()){
+            return this.tasks.get(id);
+        }
+        else {
+            throw new IllegalArgumentException("There is no task with this id.");
+        }
     }
 }
