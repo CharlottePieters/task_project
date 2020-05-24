@@ -43,7 +43,6 @@ public class TaskDB implements Serializable, TaskService {
 
     @Override
     public Task getTask(String id) throws IllegalArgumentException{
-        System.out.println("We zitten in de getTask methode van TaskDB");
         if (this.tasks.containsKey(id)){
             return this.tasks.get(id);
         }

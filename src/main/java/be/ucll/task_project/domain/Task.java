@@ -2,12 +2,20 @@ package be.ucll.task_project.domain;
 
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class Task {
     private String id;
+
+    @NotNull
+    @NotEmpty
     private String title;
+
     private String description;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime date;
 
@@ -16,7 +24,6 @@ public class Task {
     public Task(String title, LocalDateTime date){
         this.setTitle(title);
         this.setDate(date);
-        this.setDescription("This task has no description.");
     }
 
     public Task(String title, String description, LocalDateTime date){
@@ -54,16 +61,6 @@ public class Task {
     }
 
     public void setDescription(String description) {
-        if (description == null){
-            this.description = "This task has no description.";
-        }
-        else {
-            if (description.trim().isEmpty()){
-                this.description = "This task has no description.";
-            }
-            else{
-                this.description = description;
-            }
-        }
+        this.description = description;
     }
 }
