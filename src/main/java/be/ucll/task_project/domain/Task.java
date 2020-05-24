@@ -1,29 +1,28 @@
 package be.ucll.task_project.domain;
 
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDateTime;
 
 public class Task {
-    private int id;
+    private String id;
     private String title;
     private String description;
-    private Date date;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime date;
 
     public Task(){}
 
-    public Task(String title, Date date){
+    public Task(String title, LocalDateTime date){
         this.setTitle(title);
         this.setDate(date);
         this.setDescription("This task has no description.");
     }
 
-    public Task(String title, String date, String time) throws ParseException {
+    public Task(String title, String description, LocalDateTime date){
         this.setTitle(title);
-        this.setDate(date, time);
-        this.setDescription("This task has no description.");
+        this.setDescription(description);
+        this.setDate(date);
     }
 
     public String getTitle() {
@@ -34,25 +33,19 @@ public class Task {
         this.title = title.trim();
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
-    public void setDate(String date,  String time) throws ParseException {  //date in ”dd/mm/yyyy” format; time in ”hh:mm” format
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        Date dateAsDate = dateFormat.parse(date + " " + time);
-        this.date = dateAsDate;
-    }
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -61,6 +54,16 @@ public class Task {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        if (description == null){
+            this.description = "This task has no description.";
+        }
+        else {
+            if (description.trim().isEmpty()){
+                this.description = "This task has no description.";
+            }
+            else{
+                this.description = description;
+            }
+        }
     }
 }

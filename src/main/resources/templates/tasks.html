@@ -10,13 +10,31 @@
 <div th:if="${tasks != null and !tasks.empty}">
     <ul>
         <li th:each="task : ${tasks}">
-            <span th:text="*{task.title}"></span>: due <span th:text="*{task.date}"></span>
+            <a th:href="@{/tasks/} + ${task.key}"><span th:text="*{task.value.title}"></span></a>: due <span th:text="*{task.value.date}"></span>
         </li>
     </ul>
 </div>
 <div th:unless="${tasks != null and !tasks.empty}">
     <p>No tasks left to do.</p>
 </div>
+
+<form method="post" th:action="@{/tasks/new}" th:object="${task}" >
+    <h4>Create a new task</h4>
+    <p>* required field</p>
+    <div>
+        <label for="title">*Title: </label>
+        <input type="text" name="title" id="title" required>
+    </div>
+    <div>
+        <label for="description">Description: </label>
+        <textarea type="text" name="description" id="description" rows="3"></textarea>
+    </div>
+    <div>
+        <label for="date">*Date and time: </label>
+        <input type="datetime-local" name="date" id="date" required>
+    </div>
+    <input type="submit" value="Add Task">
+</form>
 
 </body>
 </html>

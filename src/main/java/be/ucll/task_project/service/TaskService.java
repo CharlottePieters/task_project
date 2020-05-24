@@ -2,12 +2,14 @@ package be.ucll.task_project.service;
 
 import be.ucll.task_project.domain.Task;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface TaskService {
 
-    public ArrayList<Task> getTasks();
+    public HashMap<String, Task> getTasks();
 
-    public Task getTask(int id) throws IllegalArgumentException;
+    public Task getTask(String id) throws IllegalArgumentException;
+
+    public void addTask(Task task);
 
 }

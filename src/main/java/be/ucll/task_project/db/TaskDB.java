@@ -6,50 +6,56 @@ import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.text.ParseException;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.UUID;
 
 @Repository
 public class TaskDB implements Serializable, TaskService {
-    private ArrayList<Task> tasks;
+    private HashMap<String, Task> tasks;
 
     public TaskDB() throws ParseException {
-        this.tasks = new ArrayList<Task>();
-        this.addTask("Task 1", "20/03/2020", "22:00");
-        this.addTask("Task 2", "21/03/2020", "18:00");
-        this.addTask("Task 3", "27/03/2020", "17:00");
+        this.tasks = new HashMap<String, Task>();
+        this.addTask("Task 1", LocalDateTime.now());
+        this.addTask("Task 2", LocalDateTime.now());
+        this.addTask("Task 3", LocalDateTime.now());
     }
 
-    public TaskDB(ArrayList<Task> tasks){
+    public TaskDB(HashMap<String, Task> tasks){
         this.setTasks(tasks);
     }
 
     @Override
-    public ArrayList<Task> getTasks() {
+    public HashMap<String, Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(ArrayList<Task> tasks) {
+    public void setTasks(HashMap<String, Task> tasks) {
         this.tasks = tasks;
     }
 
-    private void addTask(Task task){
-        task.setId(this.tasks.size());
-        this.tasks.add(task);
-    }
-
-    private void addTask(String title, String date, String time) throws ParseException { //date in ”dd/mm/yyyy” format; time in ”hh:mm” format
-        Task task = new Task(title, date, time);
-        task.setId(this.tasks.size());
-        this.tasks.add(task);
+    private void addTask(String title, LocalDateTime date) throws ParseException {
+        Task task = new Task(title, date);
+        String uniqueID = UUID.randomUUID().toString();
+        task.setId(uniqueID);
+        this.tasks.put(uniqueID, task);
     }
 
     @Override
-    public Task getTask(int id) throws IllegalArgumentException{
-        if (id < this.tasks.size()){
+    public Task getTask(String id) throws IllegalArgumentException{
+        System.out.println("We zitten in de getTask methode van TaskDB");
+        if (this.tasks.containsKey(id)){
             return this.tasks.get(id);
         }
         else {
             throw new IllegalArgumentException("There is no task with this id.");
         }
+    }
+
+    @Override
+    public void addTask(Task task){
+        String uniqueID = UUID.randomUUID().toString();
+        task.setId(uniqueID);
+        this.tasks.put(uniqueID, task);
     }
 }
