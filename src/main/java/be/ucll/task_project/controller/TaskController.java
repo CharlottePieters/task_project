@@ -54,7 +54,28 @@ public class TaskController implements Serializable {
             service.addTask(task);
             return "redirect:/tasks";
         }
+    }
 
+    @GetMapping("tasks/edit/{id}")
+    public String getEditForm(Model model, @PathVariable("id") String id){
+        try{
+            model.addAttribute("oldTask", this.service.getTask(id));
+        }
+        catch (Exception e){
+            model.addAttribute("error", e.getMessage());
+        }
+        return "editTask";
+    }
+
+    @PostMapping("tasks/edit/{id}")
+    public String editTask(@ModelAttribute @Valid Task newTask, BindingResult bindingResult, @PathVariable("id") String id) {
+        if (bindingResult.hasErrors()){
+            return "editTask";
+        }
+        else {
+            service.editTask(id, newTask);
+            return "redirect:/tasks/{id}";
+        }
     }
 
 }

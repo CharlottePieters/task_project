@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>New Task</title>
+    <title>Edit Task</title>
 </head>
 <body>
-<h1>Create a new task</h1>
+<h1>Edit <span th:text="${oldTask.title}"></span></h1>
 
-<form method="post" action="/tasks/new" th:object="${task}" >
+<form method="post" th:action="@{'/tasks/edit/' + ${oldTask.id}}" th:object="${oldTask}" >
     <p th:text="${#fields.globalErrors()}"></p>
     <div>
         <label for="title">Title: </label>
@@ -22,7 +22,8 @@
         <label for="date">Date and time: </label>
         <input type="datetime-local" th:field="*{date}" id="date">
     </div>
-    <input type="submit" value="Add Task">
+    <input type="submit" value="Edit Task">
 </form>
+
 </body>
 </html>

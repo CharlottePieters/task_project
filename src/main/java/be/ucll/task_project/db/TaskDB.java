@@ -53,8 +53,15 @@ public class TaskDB implements Serializable, TaskService {
 
     @Override
     public void addTask(Task task){
-        String uniqueID = UUID.randomUUID().toString();
-        task.setId(uniqueID);
-        this.tasks.put(uniqueID, task);
+        if (task.getId() == null){
+            String uniqueID = UUID.randomUUID().toString();
+            task.setId(uniqueID);
+        }
+        this.tasks.put(task.getId(), task);
+    }
+
+    @Override
+    public void editTask(String id, Task newTask){
+        this.tasks.put(id, newTask);
     }
 }
