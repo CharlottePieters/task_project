@@ -1,17 +1,19 @@
 package be.ucll.task_project.service;
 
-import be.ucll.task_project.domain.Task;
+import be.ucll.task_project.domain.ParentTask;
+import be.ucll.task_project.domain.SubTask;
 
 import java.util.HashMap;
 
 public interface TaskService {
 
-    public HashMap<String, Task> getTasks();
+    HashMap<String, ParentTask> getTasks();
 
-    public Task getTask(String id) throws IllegalArgumentException;
+    ParentTask getTask(String id) throws IllegalArgumentException;
 
-    public void addTask(Task task);
+    void addTask(ParentTask task);
 
-    public void editTask(String id, Task newTask);
+    void editTask(String id, ParentTask newTask);
 
+    void addSubTask(ParentTask parent, SubTask subTask);
 }

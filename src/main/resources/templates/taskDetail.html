@@ -25,9 +25,22 @@
                 <td><h3>Due Date:</h3></td>
                 <td th:text="${task.date}"></td>
             </tr>
+            <tr>
+                <td><h3>Subtasks:</h3></td>
+                <td th:if="${task.subTasks == null}">This task has no subtasks.</td>
+                <td th:unless="${task.subTasks == null}">
+                    <ul>
+                        <li th:each="subTask : ${task.subTasks}">
+                            <h4 th:text="${subTask.title}"></h4>
+                            <p th:text="${subTask.description}"></p>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
         </table>
     </div>
 
     <button><a th:href="@{'/tasks/edit/' + ${task.id}}">Edit</a></button>
+    <button><a th:href="@{'/tasks/' + ${task.id} + '/sub/create'}">Add Subtask</a></button>
 </body>
 </html>

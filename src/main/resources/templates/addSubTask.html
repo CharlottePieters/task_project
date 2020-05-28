@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Task</title>
+    <title>Create Subtask</title>
 </head>
 <body>
-<h1>Edit Task</h1>
+<h1>Create a Subtask for '<span th:text="${parentTask.title}"></span>'</h1>
 
-<form method="post" th:action="@{'/tasks/edit/' + ${oldTask.id}}" th:object="${oldTask}" >
+<form method="post" th:action="@{'/tasks/' + ${parentTask.id} + '/sub/create'}" th:object="${subTask}" >
     <p th:text="${#fields.globalErrors()}"></p>
     <div>
         <label for="title">Title: </label>
@@ -18,12 +18,7 @@
         <label for="description">Description: </label>
         <textarea type="text" th:field="*{description}" id="description" rows="3"></textarea>
     </div>
-    <div>
-        <label for="date">Date and time: </label>
-        <input type="datetime-local" th:field="*{date}" id="date">
-    </div>
-    <input type="submit" value="Edit Task">
+    <input type="submit" value="Add Subtask">
 </form>
-
 </body>
 </html>
