@@ -1,19 +1,18 @@
-package be.ucll.task_project.domain;
+package be.ucll.task_project.dto;
 
+import be.ucll.task_project.domain.SubTask;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import be.ucll.task_project.dto.SubTaskDTO;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-@Entity
-public class Task {
-    @Id
+public class TaskDTO {
     private String id;
 
+    @NotNull
+    @NotEmpty
     private String title;
 
     private String description;
@@ -21,22 +20,35 @@ public class Task {
     //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime date;
 
-    @OneToMany(mappedBy = "parentTask")
     private ArrayList<SubTask> subTasks;
 
+    public TaskDTO(){
+        this.subTasks = new ArrayList<>();
 
-    public Task(){
     }
 
-    public Task(String title, LocalDateTime date){
+    public TaskDTO(String title, LocalDateTime date){
         this.setTitle(title);
         this.setDate(date);
+        this.subTasks = new ArrayList<>();
+
     }
 
-    public Task(String title, String description, LocalDateTime date){
+    public TaskDTO(String title, String description, LocalDateTime date){
         this.setTitle(title);
         this.setDescription(description);
         this.setDate(date);
+        this.subTasks = new ArrayList<>();
+
+    }
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title.trim();
     }
 
     public String getId() {
@@ -47,14 +59,6 @@ public class Task {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title.trim();
-    }
-
     public String getDescription() {
         return description;
     }
@@ -62,6 +66,7 @@ public class Task {
     public void setDescription(String description) {
         this.description = description;
     }
+
 
     public LocalDateTime getDate() {
         return date;
@@ -79,10 +84,10 @@ public class Task {
         this.subTasks = subTasks;
     }
 
-    public void addSubTask(SubTaskDTO subTaskDTO){
-        SubTask subTask = new SubTask();
-        subTask.setTitle(subTaskDTO.getTitle());
-        subTask.setDescription(subTaskDTO.getDescription());
+    public void addSubTask(SubTask subTask){
+        if (this.subTasks == null){
+            this.subTasks = new ArrayList<SubTask>();
+        }
         this.subTasks.add(subTask);
     }
 }

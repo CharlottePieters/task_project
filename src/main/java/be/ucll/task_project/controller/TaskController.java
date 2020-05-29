@@ -1,7 +1,7 @@
 package be.ucll.task_project.controller;
 
-import be.ucll.task_project.domain.ParentTask;
-import be.ucll.task_project.domain.SubTask;
+import be.ucll.task_project.dto.TaskDTO;
+import be.ucll.task_project.dto.SubTaskDTO;
 import be.ucll.task_project.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,12 +42,12 @@ public class TaskController implements Serializable {
 
     @GetMapping("/tasks/new")
     public String getCreateForm(Model model) {
-        model.addAttribute("task", new ParentTask());
+        model.addAttribute("task", new TaskDTO());
         return "addTask";
     }
 
     @PostMapping("/tasks/new")
-    public String addTask(@ModelAttribute @Valid ParentTask task, BindingResult bindingResult){
+    public String addTask(@ModelAttribute @Valid TaskDTO task, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "addTask";
         }
@@ -69,7 +69,7 @@ public class TaskController implements Serializable {
     }
 
     @PostMapping("tasks/edit/{id}")
-    public String editTask(@ModelAttribute("oldTask") @Valid ParentTask newTask, BindingResult bindingResult, @PathVariable("id") String id) {
+    public String editTask(@ModelAttribute("oldTask") @Valid TaskDTO newTask, BindingResult bindingResult, @PathVariable("id") String id) {
         if (bindingResult.hasErrors()){
             return "editTask";
         }
@@ -83,7 +83,7 @@ public class TaskController implements Serializable {
     public String getAddSubTask(Model model, @PathVariable("id") String id){
         try{
             model.addAttribute("parentTask", this.service.getTask(id));
-            model.addAttribute("subTask", new SubTask());
+            model.addAttribute("subTask", new SubTaskDTO());
         }
         catch (Exception e){
             model.addAttribute("error", e.getMessage());
@@ -92,13 +92,13 @@ public class TaskController implements Serializable {
     }
 
     @PostMapping("tasks/{id}/sub/create")
-    public String addSubTask(@ModelAttribute("subTask") @Valid SubTask subTask, BindingResult bindingresult, @PathVariable("id") String id, Model model){
+    public String addSubTask(@ModelAttribute("subTask") @Valid SubTaskDTO subTask, BindingResult bindingresult, @PathVariable("id") String id, Model model){
         if (bindingresult.hasErrors()){
             model.addAttribute("parentTask", this.service.getTask(id)); //zodat parentTask niet ”vergeten” wordt
             return "addSubTask";
         }
         else {
-            ParentTask parentTask = this.service.getTask(id);
+            TaskDTO parentTask = this.service.getTask(id);
             service.addSubTask(parentTask, subTask);
             return "redirect:/tasks/{id}";
         }

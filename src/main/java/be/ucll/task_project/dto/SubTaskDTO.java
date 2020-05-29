@@ -1,41 +1,30 @@
-package be.ucll.task_project.domain;
+package be.ucll.task_project.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
-@Entity
-public class SubTask extends Task {
-    @Id
+public class SubTaskDTO {
     private String id;
 
+    @NotNull
+    @NotEmpty
     private String title;
 
     private String description;
 
-    @ManyToOne
-    private Task parent;
+    private TaskDTO parent;
 
-    public SubTask(){}
+    public SubTaskDTO(){}
 
-    public SubTask(String title, String description){
+    public SubTaskDTO(String title, String description){
         this.setTitle(title);
         this.setDescription(description);
     }
 
-    public SubTask(String title, String description, Task parent){
+    public SubTaskDTO(String title, String description, TaskDTO parent){
         this.setTitle(title);
         this.setDescription(description);
         this.setParent(parent);
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -46,6 +35,14 @@ public class SubTask extends Task {
         this.title = title.trim();
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -54,11 +51,11 @@ public class SubTask extends Task {
         this.description = description;
     }
 
-    public Task getParent() {
+    public TaskDTO getParent() {
         return parent;
     }
 
-    public void setParent(Task parent) {
+    public void setParent(TaskDTO parent) {
         this.parent = parent;
     }
 }
