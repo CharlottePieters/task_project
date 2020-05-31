@@ -1,14 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
 <body>
-<h1>Task Manager</h1>
+<h1 th:text="#{taskManager}"></h1>
 <div>
-    <button><a href="/tasks">Overview of Tasks</a></button>
-    <button><a href="/tasks/new">Add New Task</a></button>
+    <button><a href="/tasks" th:text="#{taskOverview}"></a></button>
+    <button><a href="/tasks/new" th:text="#{addTask}"></a></button>
 </div>
+<footer>
+    <span th:text="#{langChange}"></span>
+    <select id="locales">
+        <option value=""></option>
+        <option value="en" th:text="#{langEn}"></option>
+        <option value="nl" th:text="#{langNl}"></option>
+    </select>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#locales").change(function () {
+                var selectedOption = $('#locales').val();
+                if (selectedOption != ''){
+                    window.location.replace('?lang=' + selectedOption);
+                }
+            });
+        });
+    </script>
+
+</footer>
 </body>
 </html>
