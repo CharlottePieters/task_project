@@ -2,8 +2,11 @@ package be.ucll.task_project.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 public class SubTaskDTO {
+    @NotNull
+    @NotEmpty
     private String id;
 
     @NotNull
@@ -14,17 +17,21 @@ public class SubTaskDTO {
 
     private TaskDTO parent;
 
-    public SubTaskDTO(){}
+    public SubTaskDTO(){
+        this.setId();
+    }
 
     public SubTaskDTO(String title, String description){
         this.setTitle(title);
         this.setDescription(description);
+        this.setId();
     }
 
     public SubTaskDTO(String title, String description, TaskDTO parent){
         this.setTitle(title);
         this.setDescription(description);
         this.setParent(parent);
+        this.setId();
     }
 
     public String getTitle() {
@@ -41,6 +48,10 @@ public class SubTaskDTO {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setId() {
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getDescription() {

@@ -27,8 +27,8 @@
             </tr>
             <tr>
                 <td><h3>Subtasks:</h3></td>
-                <td th:if="${task.subTasks == null}">This task has no subtasks.</td>
-                <td th:unless="${task.subTasks == null}">
+                <td th:if="${task.subTasks.isEmpty()}">This task has no subtasks.</td>
+                <td th:unless="${task.subTasks.isEmpty()}">
                     <ul>
                         <li th:each="subTask : ${task.subTasks}">
                             <h4 th:text="${subTask.title}"></h4>

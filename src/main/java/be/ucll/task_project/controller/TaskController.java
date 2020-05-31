@@ -1,5 +1,6 @@
 package be.ucll.task_project.controller;
 
+import be.ucll.task_project.domain.Task;
 import be.ucll.task_project.dto.TaskDTO;
 import be.ucll.task_project.dto.SubTaskDTO;
 import be.ucll.task_project.service.TaskService;
@@ -32,7 +33,9 @@ public class TaskController implements Serializable {
     @GetMapping("tasks/{id}")
     public String getTaskDetail(Model model, @PathVariable("id") String id){
         try{
-            model.addAttribute("task", this.service.getTask(id));
+            TaskDTO taskDTO = this.service.getTask(id);
+            System.out.println("Subtasks in getTaskDetail: " + taskDTO.getSubTasks().size());
+            model.addAttribute("task", taskDTO);
         }
         catch (Exception e){
             model.addAttribute("error", e.getMessage());
@@ -47,7 +50,7 @@ public class TaskController implements Serializable {
     }
 
     @PostMapping("/tasks/new")
-    public String addTask(@ModelAttribute @Valid TaskDTO task, BindingResult bindingResult){
+    public String addTask(@ModelAttribute("task") @Valid TaskDTO task, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "addTask";
         }
@@ -98,8 +101,8 @@ public class TaskController implements Serializable {
             return "addSubTask";
         }
         else {
-            TaskDTO parentTask = this.service.getTask(id);
-            service.addSubTask(parentTask, subTask);
+            service.addSubTask(id, subTask);
+            System.out.println("Subtasks after adding to repo: " + this.service.getTask(id).getSubTasks().size());
             return "redirect:/tasks/{id}";
         }
     }

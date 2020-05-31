@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Task {
@@ -21,8 +22,8 @@ public class Task {
     //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime date;
 
-    @OneToMany(mappedBy = "parentTask")
-    private ArrayList<SubTask> subTasks;
+    @OneToMany(mappedBy = "parent")
+    private List<SubTask> subTasks;
 
 
     public Task(){
@@ -71,18 +72,15 @@ public class Task {
         this.date = date;
     }
 
-    public ArrayList<SubTask> getSubTasks() {
+    public List<SubTask> getSubTasks() {
         return subTasks;
     }
 
-    public void setSubTasks(ArrayList<SubTask> subTasks) {
+    public void setSubTasks(List<SubTask> subTasks) {
         this.subTasks = subTasks;
     }
 
-    public void addSubTask(SubTaskDTO subTaskDTO){
-        SubTask subTask = new SubTask();
-        subTask.setTitle(subTaskDTO.getTitle());
-        subTask.setDescription(subTaskDTO.getDescription());
+    public void addSubTask(SubTask subTask){
         this.subTasks.add(subTask);
     }
 }

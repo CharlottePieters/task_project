@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class SubTask extends Task {
+public class SubTask {
     @Id
     private String id;
 

@@ -3,11 +3,11 @@ package be.ucll.task_project.service;
 import be.ucll.task_project.dto.TaskDTO;
 import be.ucll.task_project.dto.SubTaskDTO;
 
-import java.util.HashMap;
+import java.util.List;
 
 public interface TaskService {
 
-    HashMap<String, TaskDTO> getTasks();
+    List<TaskDTO> getTasks();
 
     TaskDTO getTask(String id) throws IllegalArgumentException;
 
@@ -15,5 +15,5 @@ public interface TaskService {
 
     void editTask(String id, TaskDTO newTask);
 
-    void addSubTask(TaskDTO parent, SubTaskDTO subTask);
+    void addSubTask(String parentId, SubTaskDTO subTask);
 }
