@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,11 +38,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDTO getTask(String id) throws IllegalArgumentException {
+    public TaskDTO getTask(UUID id) throws IllegalArgumentException {
         TaskDTO taskDTO = new TaskDTO();
         for (Task task : taskRepository.findAll()) {
             if (task.getId().equals(id)) {
-                System.out.println("Subtasks grabbing from repo: " + task.getSubTasks().size());
+                //System.out.println("Subtasks grabbing from repo: " + task.getSubTasks().size());
                 taskDTO.setId(id);
                 taskDTO.setTitle(task.getTitle());
                 taskDTO.setDescription(task.getDescription());
@@ -52,22 +53,9 @@ public class TaskServiceImpl implements TaskService {
         return taskDTO;
     }
 
-
-        /*TaskDTO taskDTO = new TaskDTO();
-        for(TaskDTO task : this.getTasks()){
-            if (id.equals(task.getId())){
-                taskDTO = task;
-            }
-            else {
-                throw new IllegalArgumentException("There is no task with this ID");
-            }
-        }
-        return taskDTO;*/
-
     @Override
     public void addTask(TaskDTO taskDTO) {
         Task task = new Task();
-        task.setId(taskDTO.getId());
         task.setTitle(taskDTO.getTitle());
         task.setDescription(taskDTO.getDescription());
         task.setDate(taskDTO.getDate());
@@ -76,7 +64,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void editTask(String id, TaskDTO newTask) {
+    public void editTask(UUID id, TaskDTO newTask) {
         for (Task oldTask : taskRepository.findAll()) {
             if (oldTask.getId().equals(id)){
                 oldTask.setTitle(newTask.getTitle());
@@ -91,9 +79,8 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Override
-    public void addSubTask(String id, SubTaskDTO subTaskDTO) {
+    public void addSubTask(UUID id, SubTaskDTO subTaskDTO) {
         SubTask subTask = new SubTask();
-        subTask.setId(subTaskDTO.getId());
         subTask.setTitle(subTaskDTO.getTitle());
         subTask.setDescription(subTaskDTO.getDescription());
 
@@ -111,15 +98,18 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
-   /* public void deleteTasks() {
+    @Override
+    public void deleteTasks() {
         taskRepository.deleteAll();
     }
 
-    public void deleteTask(String id) {
+    @Override
+    public void deleteTask(UUID id) {
         for (Task task : taskRepository.findAll()) {
-            if (task.getId() == id) {
+            if (task.getId().equals(id)) {
                 taskRepository.delete(task);
             }
         }
-    }*/
+    }
+
 }

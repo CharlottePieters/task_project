@@ -2,23 +2,45 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create Subtask</title>
+    <title th:text="#{addSubTask}"></title>
 </head>
 <body>
-<h1>Create a Subtask for '<span th:text="${parentTask.title}"></span>'</h1>
+<h1 th:text="#{addSubTask}"></h1>
 
 <form method="post" th:action="@{'/tasks/' + ${parentTask.id} + '/sub/create'}" th:object="${subTask}" >
     <p th:text="${#fields.globalErrors()}"></p>
     <div>
-        <label for="title">Title: </label>
+        <label for="title" th:text="#{title}"></label>
         <input type="text" th:field="*{title}" id="title">
         <p th:errors="*{title}"></p>
     </div>
     <div>
-        <label for="description">Description: </label>
+        <label for="description" th:text="#{description}"></label>
         <textarea type="text" th:field="*{description}" id="description" rows="3"></textarea>
     </div>
     <input type="submit" value="Add Subtask">
 </form>
+<footer>
+    <span th:text="#{langChange}"></span>
+    <select id="locales">
+        <option value=""></option>
+        <option value="en" th:text="#{langEn}"></option>
+        <option value="nl" th:text="#{langNl}"></option>
+    </select>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#locales").change(function () {
+                var selectedOption = $('#locales').val();
+                if (selectedOption != ''){
+                    window.location.replace('?lang=' + selectedOption);
+                }
+            });
+        });
+    </script>
+
+</footer>
 </body>
 </html>

@@ -2,32 +2,32 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Task Detail</title>
+    <title th:text="#{taskDetail}"></title>
 </head>
 <body>
-    <h1>Task Detail</h1>
+    <h1 th:text="#{taskDetail}"></h1>
 
     <div th:if="${error != null}">
-        <h3>ERROR: Task not found.</h3>
+        <h3 th:text="#{taskNotFoundError}"></h3>
     </div>
 
     <div th:unless="${error != null}">
         <table>
             <tr>
-                <td><h3>Title:</h3></td>
+                <td><h3 th:text="#{title}"></h3></td>
                 <td th:text="${task.title}"></td>
             </tr>
             <tr>
-                <td><h3>Description:</h3></td>
+                <td><h3 th:text="#{description}"></h3></td>
                 <td th:text="${task.description}"></td>
             </tr>
             <tr>
-                <td><h3>Due Date:</h3></td>
+                <td><h3 th:text="#{dueDate}"></h3></td>
                 <td th:text="${task.date}"></td>
             </tr>
             <tr>
-                <td><h3>Subtasks:</h3></td>
-                <td th:if="${task.subTasks.isEmpty()}">This task has no subtasks.</td>
+                <td><h3 th:text="#{subTasks}"></h3></td>
+                <td th:if="${task.subTasks.isEmpty()}" th:text="#{noSubTasks}"></td>
                 <td th:unless="${task.subTasks.isEmpty()}">
                     <ul>
                         <li th:each="subTask : ${task.subTasks}">
@@ -40,7 +40,30 @@
         </table>
     </div>
 
-    <button><a th:href="@{'/tasks/edit/' + ${task.id}}">Edit</a></button>
-    <button><a th:href="@{'/tasks/' + ${task.id} + '/sub/create'}">Add Subtask</a></button>
+    <button><a th:href="@{'/tasks/edit/' + ${task.id}}" th:text="#{edit}">Edit</a></button>
+    <button><a th:href="@{'/tasks/' + ${task.id} + '/sub/create'}" th:text="#{addSubTask}"></a></button>
+
+    <footer>
+        <span th:text="#{langChange}"></span>
+        <select id="locales">
+            <option value=""></option>
+            <option value="en" th:text="#{langEn}"></option>
+            <option value="nl" th:text="#{langNl}"></option>
+        </select>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#locales").change(function () {
+                    var selectedOption = $('#locales').val();
+                    if (selectedOption != ''){
+                        window.location.replace('?lang=' + selectedOption);
+                    }
+                });
+            });
+        </script>
+
+    </footer>
 </body>
 </html>
