@@ -1,6 +1,5 @@
 package be.ucll.task_project.controller;
 
-import be.ucll.task_project.domain.Task;
 import be.ucll.task_project.dto.TaskDTO;
 import be.ucll.task_project.dto.SubTaskDTO;
 import be.ucll.task_project.service.TaskService;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Controller
 public class TaskController implements Serializable {
@@ -31,7 +31,7 @@ public class TaskController implements Serializable {
     }
 
     @GetMapping("tasks/{id}")
-    public String getTaskDetail(Model model, @PathVariable("id") String id){
+    public String getTaskDetail(Model model, @PathVariable("id") UUID id){
         try{
             TaskDTO taskDTO = this.service.getTask(id);
             System.out.println("Subtasks in getTaskDetail: " + taskDTO.getSubTasks().size());
@@ -61,7 +61,7 @@ public class TaskController implements Serializable {
     }
 
     @GetMapping("tasks/edit/{id}")
-    public String getEditForm(Model model, @PathVariable("id") String id){
+    public String getEditForm(Model model, @PathVariable("id") UUID id){
         try{
             model.addAttribute("oldTask", this.service.getTask(id));
         }
@@ -72,7 +72,7 @@ public class TaskController implements Serializable {
     }
 
     @PostMapping("tasks/edit/{id}")
-    public String editTask(@ModelAttribute("oldTask") @Valid TaskDTO newTask, BindingResult bindingResult, @PathVariable("id") String id) {
+    public String editTask(@ModelAttribute("oldTask") @Valid TaskDTO newTask, BindingResult bindingResult, @PathVariable("id") UUID id) {
         if (bindingResult.hasErrors()){
             return "editTask";
         }
@@ -83,7 +83,7 @@ public class TaskController implements Serializable {
     }
 
     @GetMapping("tasks/{id}/sub/create")
-    public String getAddSubTask(Model model, @PathVariable("id") String id){
+    public String getAddSubTask(Model model, @PathVariable("id") UUID id){
         try{
             model.addAttribute("parentTask", this.service.getTask(id));
             model.addAttribute("subTask", new SubTaskDTO());
@@ -95,7 +95,7 @@ public class TaskController implements Serializable {
     }
 
     @PostMapping("tasks/{id}/sub/create")
-    public String addSubTask(@ModelAttribute("subTask") @Valid SubTaskDTO subTask, BindingResult bindingresult, @PathVariable("id") String id, Model model){
+    public String addSubTask(@ModelAttribute("subTask") @Valid SubTaskDTO subTask, BindingResult bindingresult, @PathVariable("id") UUID id, Model model){
         if (bindingresult.hasErrors()){
             model.addAttribute("parentTask", this.service.getTask(id)); //zodat parentTask niet ”vergeten” wordt
             return "addSubTask";

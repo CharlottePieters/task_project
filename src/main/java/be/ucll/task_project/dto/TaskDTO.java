@@ -3,6 +3,7 @@ package be.ucll.task_project.dto;
 import be.ucll.task_project.domain.SubTask;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.GeneratedValue;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -13,7 +14,8 @@ import java.util.UUID;
 public class TaskDTO {
     @NotNull
     @NotEmpty
-    private String id;
+    @GeneratedValue
+    private UUID id;
 
     @NotNull
     @NotEmpty
@@ -29,16 +31,12 @@ public class TaskDTO {
 
     public TaskDTO(){
         this.subTasks = new ArrayList<SubTask>();
-        this.setId();
-
     }
 
     public TaskDTO(String title, LocalDateTime date){
         this.setTitle(title);
         this.setDate(date);
         this.subTasks = new ArrayList<SubTask>();
-        this.setId();
-
     }
 
     public TaskDTO(String title, String description, LocalDateTime date){
@@ -46,8 +44,6 @@ public class TaskDTO {
         this.setDescription(description);
         this.setDate(date);
         this.subTasks = new ArrayList<>();
-        this.setId();
-
     }
 
 
@@ -59,16 +55,12 @@ public class TaskDTO {
         this.title = title.trim();
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
-    }
-
-    public void setId() {
-        this.id = UUID.randomUUID().toString();
     }
 
     public String getDescription() {
@@ -78,7 +70,6 @@ public class TaskDTO {
     public void setDescription(String description) {
         this.description = description;
     }
-
 
     public LocalDateTime getDate() {
         return date;

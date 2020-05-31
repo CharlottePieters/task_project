@@ -16,19 +16,22 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class TaskServiceImplTest {
+	UUID id = UUID.randomUUID();
+
 	@Autowired
 	private TaskServiceImpl service;
 
 	@BeforeEach
 	public void setUpTaskDTO(){
 		TaskDTO taskDTO = new TaskDTO();
-		taskDTO.setId("id");
+		taskDTO.setId(id);
 		taskDTO.setTitle("title");
 		taskDTO.setDescription("description");
 		taskDTO.setDate(LocalDateTime.of(2222, 02, 02, 22, 22));
@@ -53,7 +56,7 @@ class TaskServiceImplTest {
 
 	@Test
 	public void testGetTask() {
-		TaskDTO task = service.getTask("id");
+		TaskDTO task = service.getTask(id);
 
 		assertNotNull(task);
 		assertEquals( "title", task.getTitle());
@@ -65,10 +68,10 @@ class TaskServiceImplTest {
 	public void testAddTask() {
 		assertNotNull(this.service.getTasks());
 		assertFalse(this.service.getTasks().isEmpty());
-		assertEquals("id", this.service.getTask("id").getId());
-		assertEquals("title", this.service.getTask("id").getTitle());
-		assertEquals("description", this.service.getTask("id").getDescription());
-		assertEquals(LocalDateTime.of(2222, 02, 02, 22, 22), this.service.getTask("id").getDate());
+		assertEquals("id", this.service.getTask(id).getId());
+		assertEquals("title", this.service.getTask(id).getTitle());
+		assertEquals("description", this.service.getTask(id).getDescription());
+		assertEquals(LocalDateTime.of(2222, 02, 02, 22, 22), this.service.getTask(id).getDate());
 	}
 
 	@Test
@@ -77,9 +80,9 @@ class TaskServiceImplTest {
 		newTask.setTitle("newTitle");
 		newTask.setDescription("newDescription");
 		newTask.setDate(LocalDateTime.of(2222, 02, 12, 10, 12));
-		service.editTask("id", newTask);
+		service.editTask(id, newTask);
 
-		TaskDTO adaptedTask = this.service.getTask("id");
+		TaskDTO adaptedTask = this.service.getTask(id);
 		assertNotNull(adaptedTask);
 		assertEquals("newTitle", adaptedTask.getTitle());
 		assertEquals("newDescription", adaptedTask.getDescription());

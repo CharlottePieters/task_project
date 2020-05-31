@@ -1,5 +1,6 @@
 package be.ucll.task_project.dto;
 
+import javax.persistence.GeneratedValue;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
@@ -7,7 +8,8 @@ import java.util.UUID;
 public class SubTaskDTO {
     @NotNull
     @NotEmpty
-    private String id;
+    @GeneratedValue
+    private UUID id;
 
     @NotNull
     @NotEmpty
@@ -18,20 +20,17 @@ public class SubTaskDTO {
     private TaskDTO parent;
 
     public SubTaskDTO(){
-        this.setId();
     }
 
     public SubTaskDTO(String title, String description){
         this.setTitle(title);
         this.setDescription(description);
-        this.setId();
     }
 
     public SubTaskDTO(String title, String description, TaskDTO parent){
         this.setTitle(title);
         this.setDescription(description);
         this.setParent(parent);
-        this.setId();
     }
 
     public String getTitle() {
@@ -42,16 +41,12 @@ public class SubTaskDTO {
         this.title = title.trim();
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
-    }
-
-    public void setId() {
-        this.id = UUID.randomUUID().toString();
     }
 
     public String getDescription() {

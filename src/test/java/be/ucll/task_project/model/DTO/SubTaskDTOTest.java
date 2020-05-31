@@ -6,16 +6,20 @@ import be.ucll.task_project.service.TaskService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 class SubTaskDTOTest {
+    UUID id = UUID.randomUUID();
+
 
     @Test
     public void testSetId() {
         SubTaskDTO subTask = new SubTaskDTO();
-        subTask.setId("id");
+        subTask.setId(id);
 
         assertNotNull(subTask.getId());
         assertEquals("id", subTask.getId());

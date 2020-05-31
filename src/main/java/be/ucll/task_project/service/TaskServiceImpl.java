@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,7 +38,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDTO getTask(String id) throws IllegalArgumentException {
+    public TaskDTO getTask(UUID id) throws IllegalArgumentException {
         TaskDTO taskDTO = new TaskDTO();
         for (Task task : taskRepository.findAll()) {
             if (task.getId().equals(id)) {
@@ -64,7 +65,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void editTask(String id, TaskDTO newTask) {
+    public void editTask(UUID id, TaskDTO newTask) {
         for (Task oldTask : taskRepository.findAll()) {
             if (oldTask.getId().equals(id)){
                 oldTask.setTitle(newTask.getTitle());
@@ -79,7 +80,7 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Override
-    public void addSubTask(String id, SubTaskDTO subTaskDTO) {
+    public void addSubTask(UUID id, SubTaskDTO subTaskDTO) {
         SubTask subTask = new SubTask();
         subTask.setId(subTaskDTO.getId());
         subTask.setTitle(subTaskDTO.getTitle());
@@ -105,7 +106,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(String id) {
+    public void deleteTask(UUID id) {
         for (Task task : taskRepository.findAll()) {
             if (task.getId().equals(id)) {
                 taskRepository.delete(task);

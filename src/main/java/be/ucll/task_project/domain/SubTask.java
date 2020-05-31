@@ -2,13 +2,16 @@ package be.ucll.task_project.domain;
 
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.util.UUID;
 
 @Entity
 public class SubTask {
     @Id
-    private String id;
+    @GeneratedValue
+    private UUID id;
 
     private String title;
 
@@ -30,11 +33,11 @@ public class SubTask {
         this.setParent(parent);
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -10,16 +10,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class TaskTest {
+    UUID id = UUID.randomUUID();
+
 
     @Test
     public void testSetId() {
         Task task = new Task();
-        task.setId("id");
+        task.setId(id);
 
         assertNotNull(task.getId());
         assertEquals("id", task.getId());
