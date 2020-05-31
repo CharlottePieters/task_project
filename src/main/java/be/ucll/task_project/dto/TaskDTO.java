@@ -3,7 +3,6 @@ package be.ucll.task_project.dto;
 import be.ucll.task_project.domain.SubTask;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.GeneratedValue;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -12,9 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class TaskDTO {
-    @NotNull
-    @NotEmpty
-    @GeneratedValue
+
     private UUID id;
 
     @NotNull

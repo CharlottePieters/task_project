@@ -56,7 +56,6 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void addTask(TaskDTO taskDTO) {
         Task task = new Task();
-        task.setId(taskDTO.getId());
         task.setTitle(taskDTO.getTitle());
         task.setDescription(taskDTO.getDescription());
         task.setDate(taskDTO.getDate());
@@ -82,7 +81,6 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void addSubTask(UUID id, SubTaskDTO subTaskDTO) {
         SubTask subTask = new SubTask();
-        subTask.setId(subTaskDTO.getId());
         subTask.setTitle(subTaskDTO.getTitle());
         subTask.setDescription(subTaskDTO.getDescription());
 

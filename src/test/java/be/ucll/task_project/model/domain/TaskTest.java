@@ -25,7 +25,7 @@ class TaskTest {
         task.setId(id);
 
         assertNotNull(task.getId());
-        assertEquals("id", task.getId());
+        assertEquals(id, task.getId());
     }
 
 

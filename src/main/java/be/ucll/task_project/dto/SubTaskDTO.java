@@ -6,9 +6,6 @@ import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class SubTaskDTO {
-    @NotNull
-    @NotEmpty
-    @GeneratedValue
     private UUID id;
 
     @NotNull

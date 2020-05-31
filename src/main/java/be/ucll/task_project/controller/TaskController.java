@@ -52,6 +52,7 @@ public class TaskController implements Serializable {
     @PostMapping("/tasks/new")
     public String addTask(@ModelAttribute("task") @Valid TaskDTO task, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
+            System.out.println("ERROR: " + bindingResult.getAllErrors());
             return "addTask";
         }
         else {

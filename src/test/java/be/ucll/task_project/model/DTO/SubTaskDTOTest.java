@@ -22,7 +22,7 @@ class SubTaskDTOTest {
         subTask.setId(id);
 
         assertNotNull(subTask.getId());
-        assertEquals("id", subTask.getId());
+        assertEquals(id, subTask.getId());
     }
 
     @Test
