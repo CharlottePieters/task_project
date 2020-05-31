@@ -16,4 +16,8 @@ public interface TaskService {
     void editTask(String id, TaskDTO newTask);
 
     void addSubTask(String parentId, SubTaskDTO subTask);
+
+    void deleteTasks();
+
+    void deleteTask(String id);
 }

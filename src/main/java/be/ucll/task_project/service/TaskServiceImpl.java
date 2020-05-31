@@ -41,7 +41,7 @@ public class TaskServiceImpl implements TaskService {
         TaskDTO taskDTO = new TaskDTO();
         for (Task task : taskRepository.findAll()) {
             if (task.getId().equals(id)) {
-                System.out.println("Subtasks grabbing from repo: " + task.getSubTasks().size());
+                //System.out.println("Subtasks grabbing from repo: " + task.getSubTasks().size());
                 taskDTO.setId(id);
                 taskDTO.setTitle(task.getTitle());
                 taskDTO.setDescription(task.getDescription());
@@ -51,18 +51,6 @@ public class TaskServiceImpl implements TaskService {
         }
         return taskDTO;
     }
-
-
-        /*TaskDTO taskDTO = new TaskDTO();
-        for(TaskDTO task : this.getTasks()){
-            if (id.equals(task.getId())){
-                taskDTO = task;
-            }
-            else {
-                throw new IllegalArgumentException("There is no task with this ID");
-            }
-        }
-        return taskDTO;*/
 
     @Override
     public void addTask(TaskDTO taskDTO) {
@@ -111,15 +99,18 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
-   /* public void deleteTasks() {
+    @Override
+    public void deleteTasks() {
         taskRepository.deleteAll();
     }
 
+    @Override
     public void deleteTask(String id) {
         for (Task task : taskRepository.findAll()) {
-            if (task.getId() == id) {
+            if (task.getId().equals(id)) {
                 taskRepository.delete(task);
             }
         }
-    }*/
+    }
+
 }
